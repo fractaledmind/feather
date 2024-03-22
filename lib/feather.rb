@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
-require_relative "feather/version"
+require "zeitwerk"
 
 module Feather
-  class Error < StandardError; end
-  # Your code goes here...
+	Loader = Zeitwerk::Loader.for_gem.tap do |loader|
+		loader.setup
+		loader.inflector.inflect(
+		)
+	end
 end
