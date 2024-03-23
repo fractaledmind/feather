@@ -45,7 +45,7 @@ module Feather
 			when MINUS
 				if @chars[0] == "-"
 					token_chars << @chars.shift
-					while @chars[0] != nil && @chars[0] != "\n"
+					while !@chars[0].nil? && @chars[0] != "\n"
 						token_chars << @chars.shift
 					end
 					return TK::SPACE[token_chars.join] # IMP: R-22934-2513
@@ -70,7 +70,7 @@ module Feather
 				if @chars[0] != "*" || @chars[1] == nil
 					return TK::SLASH[token_chars.join]
 				end
-				while (@chars[0] != "*" || @chars[1] != "/") && (@chars[1] != nil)
+				while (@chars[0] != "*" || @chars[1] != "/") && (!@chars[1].nil?)
 					token_chars << @chars.shift
 				end
 				token_chars << @chars.shift if @chars[0] == "*"
@@ -148,7 +148,7 @@ module Feather
 				if @chars[0] == "'"
 					token_chars << @chars.shift
 					return TK::STRING[token_chars.join]
-				elsif @chars[0] != nil
+				elsif !@chars[0].nil?
 					token_chars << @chars.shift
 					return TK::ID[token_chars.join]
 				else
@@ -224,10 +224,10 @@ module Feather
 				return token_type[token_chars.join]
 			when QUOTE2
 				token_type = TK::ILLEGAL
-				while @chars[0] != nil && @chars[0] != "]"
+				while !@chars[0].nil? && @chars[0] != "]"
 					token_chars << @chars.shift
 				end
-				if @chars[0] != nil && @chars[0] == "]"
+				if !@chars[0].nil? && @chars[0] == "]"
 					token_chars << @chars.shift
 					token_type = TK::ID
 				end
@@ -246,12 +246,12 @@ module Feather
 
 				n = 0
 				token_type = TK::VARIABLE
-				while @chars[0] != nil
+				while !@chars[0].nil?
 					if @chars[0]&.id?
 						n += 1
 					elsif @chars[0] == "(" && n > 0
 						token_chars << @chars.shift
-						while @chars[0] != nil && !@chars[0]&.space? && @chars[0] != ")"
+						while !@chars[0].nil? && !@chars[0]&.space? && @chars[0] != ")"
 							token_chars << @chars.shift
 						end
 						if @chars[0] == ")"
@@ -316,11 +316,11 @@ module Feather
 					end
 					if @chars[0] != "'" || (token_chars.length % 2) != 0
 						token_type = TK::ILLEGAL
-						while @chars[0] != "'" && @chars[0] != nil
+						while @chars[0] != "'" && !@chars[0].nil?
 							token_chars << @chars.shift
 						end
 					end
-					if @chars[0] != nil
+					if !@chars[0].nil?
 						token_chars << @chars.shift
 					end
 					return token_type[token_chars.join]
