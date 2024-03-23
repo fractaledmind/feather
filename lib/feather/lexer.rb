@@ -261,9 +261,9 @@ module Feather
 						end
 						break
 					elsif @chars[0] == ":" && @chars[1] == ":"
-					  token_chars << @chars.shift
+						token_chars << @chars.shift
 					else
-					  break
+						break
 					end
 					token_chars << @chars.shift
 				end
