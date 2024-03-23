@@ -1,0 +1,39 @@
+require:
+  - standard
+  - standard-custom
+  - rubocop-minitest
+  - rubocop-rake
+
+inherit_gem:
+  standard: config/base.yml
+  standard-custom: config/base.yml
+
+AllCops:
+  NewCops: enable
+
+Layout/IndentationStyle:
+  EnforcedStyle: tabs
+
+Layout/IndentationWidth:
+  Width: 1
+
+Style/GlobalVars:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+  EnforcedStyle: always_true
+
+Minitest/AssertEmptyLiteral:
+  Enabled: false
+
+Minitest/EmptyLineBeforeAssertionMethods:
+  Enabled: false
+
+Layout/EmptyLineBetweenDefs:
+  Exclude:
+    - 'lib/feather/tokens.rb'
+
+Layout/SpaceInsideArrayLiteralBrackets:
+  Exclude:
+    - 'lib/feather/lexer/keywords.rb'
