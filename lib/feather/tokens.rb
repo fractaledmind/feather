@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Feather
 	class Token
 		attr_reader :value
