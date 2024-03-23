@@ -24,7 +24,7 @@ module Feather
 					character_index == @index
 				end
 
-				def <=>(integer) = @index <=> integer
+				def <=>(other) = @index <=> other
 
 				def coerce(other) = [other, @index]
 			end

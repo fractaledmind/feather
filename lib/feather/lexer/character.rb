@@ -3,6 +3,7 @@
 module Feather
 	class Lexer
 		class Character
+			# rubocop:disable Layout/LeadingCommentSpace
 			TYPE_MAP = [
 				#x0  x1  x2  x3  x4  x5  x6  x7  x8  x9  xa  xb  xc  xd  xe  xf
 				29, 28, 28, 28, 28, 28, 28, 28, 28,  7,  7, 28,  7,  7, 28, 28, # 0x
@@ -22,6 +23,8 @@ module Feather
 				27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 30, # Ex
 				27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27  # Fx
 			]
+			# rubocop:enable Layout/LeadingCommentSpace
+
 			# The following 256 byte lookup table is used to encode the characteristics
 			# of each ASCII character in a bitmask:
 			#
@@ -90,8 +93,8 @@ module Feather
 			def id?				=		@flags & 0x46 != 0
 
 			def ord = @character.ord
-			def ==(other)	=	self.ord == other&.ord
-			def to_s = "#{@character}"
+			def ==(other)	=	ord == other&.ord
+			def to_s = @character.to_s
 		end
 	end
 end
