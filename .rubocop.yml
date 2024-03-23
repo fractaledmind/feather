@@ -23,6 +23,8 @@ Style/GlobalVars:
 Style/FrozenStringLiteralComment:
   Enabled: true
   EnforcedStyle: always_true
+  Exclude:
+    - 'test/feather/test_lexer.rb'
 
 Minitest/AssertEmptyLiteral:
   Enabled: false
@@ -33,7 +35,14 @@ Minitest/EmptyLineBeforeAssertionMethods:
 Layout/EmptyLineBetweenDefs:
   Exclude:
     - 'lib/feather/tokens.rb'
+    - 'lib/feather/lexer/character.rb'
 
-Layout/SpaceInsideArrayLiteralBrackets:
+Layout/ExtraSpacing:
   Exclude:
+    - 'lib/feather/lexer/character.rb'
+    - 'lib/feather/lexer/characters.rb'
     - 'lib/feather/lexer/keywords.rb'
+
+Naming/ClassAndModuleCamelCase:
+  Exclude:
+    - 'lib/feather/tokens.rb'
