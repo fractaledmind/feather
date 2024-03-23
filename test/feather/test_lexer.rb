@@ -313,23 +313,23 @@ describe Feather::Lexer do
 				assert_equal [Feather::TK::ILLEGAL[str]], Feather::Lexer.new(str).tokenize
 			end
 			it "tokenizes tick wrapped string as ID" do
-				str = '`abc`'
+				str = "`abc`"
 				assert_equal [Feather::TK::ID[str]], Feather::Lexer.new(str).tokenize
 			end
 			it "tokenizes tick wrapped string with escaped inner tick as ID" do
-				str = '`abc``def`'
+				str = "`abc``def`"
 				assert_equal [Feather::TK::ID[str]], Feather::Lexer.new(str).tokenize
 			end
 			it "tokenizes single tick as ILLEGAL" do
-				str = '`'
+				str = "`"
 				assert_equal [Feather::TK::ILLEGAL[str]], Feather::Lexer.new(str).tokenize
 			end
 			it "tokenizes square bracket wrapped string as ID" do
-				str = '[abc]'
+				str = "[abc]"
 				assert_equal [Feather::TK::ID[str]], Feather::Lexer.new(str).tokenize
 			end
 			it "tokenizes square bracket wrapped string with missing closing bracket as ILLEGAL" do
-				str = '[abc'
+				str = "[abc"
 				assert_equal [Feather::TK::ILLEGAL[str]], Feather::Lexer.new(str).tokenize
 			end
 			it "tokenizes unassigned ASCII code points as ID" do

@@ -13,7 +13,7 @@ module Feather
 		include Keywords
 
 		def initialize(sql)
-			@sql = sql.force_encoding('ASCII-8BIT')
+			@sql = sql.force_encoding("ASCII-8BIT")
 			@chars = sql.chars.map { |c| Character.new(c) }
 			@tokens = []
 		end
@@ -43,15 +43,15 @@ module Feather
 				end
 				return TK::SPACE[token_chars.join]
 			when MINUS
-				if @chars[0] == '-'
+				if @chars[0] == "-"
 					token_chars << @chars.shift
 					while @chars[0] != nil && @chars[0] != "\n"
 						token_chars << @chars.shift
 					end
 					return TK::SPACE[token_chars.join] # IMP: R-22934-2513
-				elsif @chars[0] == '>'
+				elsif @chars[0] == ">"
 					token_chars << @chars.shift
-					token_chars << @chars.shift if @chars[0] == '>'
+					token_chars << @chars.shift if @chars[0] == ">"
 					return TK::PTR[token_chars.join]
 				else
 					return TK::MINUS[token_chars.join]
@@ -67,53 +67,53 @@ module Feather
 			when STAR
 				return TK::STAR[token_chars.join]
 			when SLASH
-				if @chars[0] != '*' || @chars[1] == nil
+				if @chars[0] != "*" || @chars[1] == nil
 					return TK::SLASH[token_chars.join]
 				end
-				while (@chars[0] != '*' || @chars[1] != '/') && (@chars[1] != nil)
+				while (@chars[0] != "*" || @chars[1] != "/") && (@chars[1] != nil)
 					token_chars << @chars.shift
 				end
-				token_chars << @chars.shift if @chars[0] == '*'
-				token_chars << @chars.shift if @chars[0] == '/'
+				token_chars << @chars.shift if @chars[0] == "*"
+				token_chars << @chars.shift if @chars[0] == "/"
 
 				return TK::SPACE[token_chars.join] # IMP: R-22934-2513]
 			when PERCENT
 				return TK::REM[token_chars.join]
 			when EQ
-				token_chars << @chars.shift if @chars[0] == '='
+				token_chars << @chars.shift if @chars[0] == "="
 				return TK::EQ[token_chars.join]
 			when LT
-				if @chars[0] == '='
+				if @chars[0] == "="
 					token_chars << @chars.shift
 					return TK::LE[token_chars.join]
-				elsif @chars[0] == '>'
+				elsif @chars[0] == ">"
 					token_chars << @chars.shift
 					return TK::NE[token_chars.join]
-				elsif @chars[0] == '<'
+				elsif @chars[0] == "<"
 					token_chars << @chars.shift
 					return TK::LSHIFT[token_chars.join]
 				else
 					return TK::LT[token_chars.join]
 				end
 			when GT
-				if @chars[0] == '='
+				if @chars[0] == "="
 					token_chars << @chars.shift
 					return TK::GE[token_chars.join]
-				elsif @chars[0] == '>'
+				elsif @chars[0] == ">"
 					token_chars << @chars.shift
 					return TK::RSHIFT[token_chars.join]
 				else
 					return TK::GT[token_chars.join]
 				end
 			when BANG
-				if @chars[0] != '='
+				if @chars[0] != "="
 					return TK::ILLEGAL[token_chars.join]
 				else
 					token_chars << @chars.shift
 					return TK::NE[token_chars.join]
 				end
 			when PIPE
-				if @chars[0] != '|'
+				if @chars[0] != "|"
 					return TK::BITOR[token_chars.join]
 				else
 					token_chars << @chars.shift
@@ -129,7 +129,7 @@ module Feather
 				delim = current_char # ' or " or `
 
 				# useless branch conditions to drive brach test coverage results
-				nil if delim == '`'
+				nil if delim == "`"
 				nil if delim == "'"
 				nil if delim == '"'
 
@@ -163,20 +163,20 @@ module Feather
 				# number that begins with ".".  Fall thru into the next case
 
 				# useless branch conditions to drive brach test coverage results
-				nil if current_char == '0'
-				nil if current_char == '1'
-				nil if current_char == '2'
-				nil if current_char == '3'
-				nil if current_char == '4'
-				nil if current_char == '5'
-				nil if current_char == '6'
-				nil if current_char == '7'
-				nil if current_char == '8'
-				nil if current_char == '9'
-				nil if current_char == '.'
+				nil if current_char == "0"
+				nil if current_char == "1"
+				nil if current_char == "2"
+				nil if current_char == "3"
+				nil if current_char == "4"
+				nil if current_char == "5"
+				nil if current_char == "6"
+				nil if current_char == "7"
+				nil if current_char == "8"
+				nil if current_char == "9"
+				nil if current_char == "."
 
 				token_type = DOT === current_char ? TK::FLOAT : TK::INTEGER
-				if current_char == '0' && (@chars[0] == 'x' || @chars[0] == 'X') && @chars[1]&.xdigit?
+				if current_char == "0" && (@chars[0] == "x" || @chars[0] == "X") && @chars[1]&.xdigit?
 					token_chars << @chars.shift
 					token_chars << @chars.shift
 
@@ -191,7 +191,7 @@ module Feather
 					token_chars << @chars.shift
 				end
 
-				if @chars[0] == '.'
+				if @chars[0] == "."
 					token_chars << @chars.shift
 
 					while @chars[0]&.digit?
@@ -201,9 +201,9 @@ module Feather
 					token_type = TK::FLOAT
 				end
 
-				if (@chars[0] == 'e' || @chars[0] == 'E') && (
+				if (@chars[0] == "e" || @chars[0] == "E") && (
 					@chars[1]&.digit? || (
-						(@chars[1] == '+' || @chars[1] == '-') && @chars[2]&.digit?
+						(@chars[1] == "+" || @chars[1] == "-") && @chars[2]&.digit?
 					)
 				)
 					token_chars << @chars.shift
@@ -224,10 +224,10 @@ module Feather
 				return token_type[token_chars.join]
 			when QUOTE2
 				token_type = TK::ILLEGAL
-				while @chars[0] != nil && @chars[0] != ']'
+				while @chars[0] != nil && @chars[0] != "]"
 					token_chars << @chars.shift
 				end
-				if @chars[0] != nil && @chars[0] == ']'
+				if @chars[0] != nil && @chars[0] == "]"
 					token_chars << @chars.shift
 					token_type = TK::ID
 				end
@@ -239,28 +239,28 @@ module Feather
 				return TK::VARIABLE[token_chars.join]
 			when DOLLAR, VARALPHA
 				# useless branch conditions to drive brach test coverage results
-				nil if current_char == '$'
-				nil if current_char == '@'
-				nil if current_char == ':'
-				nil if current_char == '#'
+				nil if current_char == "$"
+				nil if current_char == "@"
+				nil if current_char == ":"
+				nil if current_char == "#"
 
 				n = 0
 				token_type = TK::VARIABLE
 				while @chars[0] != nil
 					if @chars[0]&.id?
 						n += 1
-					elsif @chars[0] == '(' && n > 0
+					elsif @chars[0] == "(" && n > 0
 						token_chars << @chars.shift
-						while @chars[0] != nil && !@chars[0]&.space? && @chars[0] != ')'
+						while @chars[0] != nil && !@chars[0]&.space? && @chars[0] != ")"
 							token_chars << @chars.shift
 						end
-						if @chars[0] == ')'
+						if @chars[0] == ")"
 							token_chars << @chars.shift
 						else
 							token_type = TK::ILLEGAL
 						end
 						break
-					elsif @chars[0] == ':' && @chars[1] == ':'
+					elsif @chars[0] == ":" && @chars[1] == ":"
 					  token_chars << @chars.shift
 					else
 					  break
@@ -305,8 +305,8 @@ module Feather
 				return token_type[token_string]
 			when X
 				# useless branch conditions to drive brach test coverage results
-				nil if current_char == 'x'
-				nil if current_char == 'X'
+				nil if current_char == "x"
+				nil if current_char == "X"
 
 				if @chars[0] == "'"
 					token_type = TK::BLOB
