@@ -1183,4 +1183,91 @@ describe Feather::Lexer do
 			end
 		end
 	end
+
+	describe "tokenizer.test" do
+		it "tokenizes 1.0e+ as ILLEGAL" do
+			assert_equal(
+				[Feather::TK::ILLEGAL["1.0e"], Feather::TK::PLUS["+"]],
+				Feather::Lexer.new("1.0e+").tokenize
+			)
+		end
+		it "tokenizes 1.0E+ as ILLEGAL" do
+			assert_equal(
+				[Feather::TK::ILLEGAL["1.0E"], Feather::TK::PLUS["+"]],
+				Feather::Lexer.new("1.0E+").tokenize
+			)
+		end
+		it "tokenizes 1.0e- as ILLEGAL" do
+			assert_equal(
+				[Feather::TK::ILLEGAL["1.0e"], Feather::TK::MINUS["-"]],
+				Feather::Lexer.new("1.0e-").tokenize
+			)
+		end
+		it "tokenizes 1.0E- as ILLEGAL" do
+			assert_equal(
+				[Feather::TK::ILLEGAL["1.0E"], Feather::TK::MINUS["-"]],
+				Feather::Lexer.new("1.0E-").tokenize
+			)
+		end
+		it "tokenizes 1.0e+/ as ILLEGAL" do
+			assert_equal(
+				[Feather::TK::ILLEGAL["1.0e"], Feather::TK::PLUS["+"], Feather::TK::SLASH["/"]],
+				Feather::Lexer.new("1.0e+/").tokenize
+			)
+		end
+		it "tokenizes 1.0E+: as ILLEGAL" do
+			assert_equal(
+				[Feather::TK::ILLEGAL["1.0E"], Feather::TK::PLUS["+"], Feather::TK::ILLEGAL[":"]],
+				Feather::Lexer.new("1.0E+:").tokenize
+			)
+		end
+		it "tokenizes 1.0e-: as ILLEGAL" do
+			assert_equal(
+				[Feather::TK::ILLEGAL["1.0e"], Feather::TK::MINUS["-"], Feather::TK::ILLEGAL[":"]],
+				Feather::Lexer.new("1.0e-:").tokenize
+			)
+		end
+		it "tokenizes 1.0E-/ as ILLEGAL" do
+			assert_equal(
+				[Feather::TK::ILLEGAL["1.0E"], Feather::TK::MINUS["-"], Feather::TK::SLASH["/"]],
+				Feather::Lexer.new("1.0E-/").tokenize
+			)
+		end
+		it "tokenizes 1.0F+5 as ILLEGAL" do
+			assert_equal(
+				[Feather::TK::ILLEGAL["1.0F"], Feather::TK::PLUS["+"], Feather::TK::INTEGER["5"]],
+				Feather::Lexer.new("1.0F+5").tokenize
+			)
+		end
+		it "tokenizes 1.0d-10 as ILLEGAL" do
+			assert_equal(
+				[Feather::TK::ILLEGAL["1.0d"], Feather::TK::MINUS["-"], Feather::TK::INTEGER["10"]],
+				Feather::Lexer.new("1.0d-10").tokenize
+			)
+		end
+		it "tokenizes 1.0e,5 as ILLEGAL" do
+			assert_equal(
+				[Feather::TK::ILLEGAL["1.0e"], Feather::TK::COMMA[","], Feather::TK::INTEGER["5"]],
+				Feather::Lexer.new("1.0e,5").tokenize
+			)
+		end
+		it "tokenizes 1.0E.10 as ILLEGAL" do
+			assert_equal(
+				[Feather::TK::ILLEGAL["1.0E"], Feather::TK::FLOAT[".10"]],
+				Feather::Lexer.new("1.0E.10").tokenize
+			)
+		end
+		it "tokenizes 2 /* as ILLEGAL" do
+			assert_equal(
+				[Feather::TK::INTEGER["2"], Feather::TK::SPACE[" "], Feather::TK::SLASH["/"], Feather::TK::STAR["*"]],
+				Feather::Lexer.new("2 /*").tokenize
+			)
+		end
+		it "tokenizes 2 /*  as ILLEGAL" do
+			assert_equal(
+				[Feather::TK::INTEGER["2"], Feather::TK::SPACE[" "], Feather::TK::SPACE["/*"], Feather::TK::SPACE[" "]],
+				Feather::Lexer.new("2 /* ").tokenize
+			)
+		end
+	end
 end
