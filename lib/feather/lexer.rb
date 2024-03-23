@@ -67,10 +67,10 @@ module Feather
 			when STAR
 				TK::STAR[token_chars.join]
 			when SLASH
-				if @chars[0] != "*" || @chars[1] == nil
+				if @chars[0] != "*" || @chars[1].nil?
 					return TK::SLASH[token_chars.join]
 				end
-				while (@chars[0] != "*" || @chars[1] != "/") && (!@chars[1].nil?)
+				while (@chars[0] != "*" || @chars[1] != "/") && !@chars[1].nil?
 					token_chars << @chars.shift
 				end
 				token_chars << @chars.shift if @chars[0] == "*"
@@ -155,7 +155,7 @@ module Feather
 					TK::ILLEGAL[token_chars.join]
 				end
 			when DOT, DIGIT
-				if DOT === current_char && (@chars[0] == nil || !@chars[0]&.digit?)
+				if DOT === current_char && (@chars[0].nil? || !@chars[0]&.digit?)
 					return TK::DOT[token_chars.join]
 				end
 
@@ -175,7 +175,7 @@ module Feather
 				nil if current_char == "9"
 				nil if current_char == "."
 
-				token_type = DOT === current_char ? TK::FLOAT : TK::INTEGER
+				token_type = (DOT === current_char) ? TK::FLOAT : TK::INTEGER
 				if current_char == "0" && (@chars[0] == "x" || @chars[0] == "X") && @chars[1]&.xdigit?
 					token_chars << @chars.shift
 					token_chars << @chars.shift
@@ -246,7 +246,7 @@ module Feather
 
 				n = 0
 				token_type = TK::VARIABLE
-				while !@chars[0].nil?
+				until @chars[0].nil?
 					if @chars[0]&.id?
 						n += 1
 					elsif @chars[0] == "(" && n > 0
