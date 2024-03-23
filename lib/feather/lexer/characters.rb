@@ -25,6 +25,7 @@ module Feather
 				end
 
 				def <=>(integer) = @index <=> integer
+
 				def coerce(other) = [other, @index]
 			end
 
