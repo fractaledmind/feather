@@ -5,8 +5,11 @@ source "https://rubygems.org"
 # Specify your gem's dependencies in feather.gemspec
 gemspec
 
-gem "rake", "~> 13.0"
+gem "quickdraw", git: "https://github.com/joeldrapper/quickdraw.git"
 
-gem "minitest", "~> 5.16"
-
-gem "standard", "~> 1.3"
+group :development do
+	gem "solargraph", platform: :ruby
+	gem "rubocop", platform: :ruby
+	gem "ruby-lsp", platform: :ruby
+	gem "simplecov", platform: :ruby
+end
