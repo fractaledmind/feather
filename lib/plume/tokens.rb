@@ -4,9 +4,7 @@ module Plume
 	class Token
 		attr_reader :value
 
-		def self.[](value)
-			new(value)
-		end
+		def self.[](value) = new(value)
 
 		def initialize(value)
 			@value = value
@@ -18,176 +16,177 @@ module Plume
 			other.is_a?(self.class) && other.value == @value
 		end
 	end
-	class KeywordToken < Token; end
-	class IDKeywordToken < KeywordToken; end
 
-	module TK; end
+	KeywordToken 			= Class.new(Token)
+	IDKeywordToken 		= Class.new(KeywordToken)
 
-	class TK::ABORT < IDKeywordToken; end
-	class TK::ACTION < IDKeywordToken; end
-	class TK::ADD < KeywordToken; end
-	class TK::AFTER < IDKeywordToken; end
-	class TK::ALL < KeywordToken; end
-	class TK::ALTER < KeywordToken; end
-	class TK::ALWAYS < IDKeywordToken; end
-	class TK::ANALYZE < IDKeywordToken; end
-	class TK::AND < KeywordToken; end
-	class TK::AS < KeywordToken; end
-	class TK::ASC < IDKeywordToken; end
-	class TK::ATTACH < IDKeywordToken; end
-	class TK::AUTOINCR < KeywordToken; end
-	class TK::BEFORE < IDKeywordToken; end
-	class TK::BEGIN < IDKeywordToken; end
-	class TK::BETWEEN < KeywordToken; end
-	class TK::BITAND < Token; end
-	class TK::BITNOT < Token; end
-	class TK::BITOR < Token; end
-	class TK::BLOB < Token; end
-	class TK::BY < IDKeywordToken; end
-	class TK::CASCADE < IDKeywordToken; end
-	class TK::CASE < KeywordToken; end
-	class TK::CAST < IDKeywordToken; end
-	class TK::CHECK < KeywordToken; end
-	class TK::COLLATE < KeywordToken; end
-	class TK::COLUMNKW < IDKeywordToken; end
-	class TK::COMMA < Token; end
-	class TK::COMMIT < KeywordToken; end
-	class TK::CONCAT < Token; end
-	class TK::CONFLICT < IDKeywordToken; end
-	class TK::CONSTRAINT < KeywordToken; end
-	class TK::CREATE < KeywordToken; end
-	class TK::CTIME_KW < IDKeywordToken; end
-	class TK::CURRENT < IDKeywordToken; end
-	class TK::DATABASE < IDKeywordToken; end
-	class TK::DEFAULT < KeywordToken; end
-	class TK::DEFERRABLE < KeywordToken; end
-	class TK::DEFERRED < IDKeywordToken; end
-	class TK::DELETE < KeywordToken; end
-	class TK::DESC < IDKeywordToken; end
-	class TK::DETACH < IDKeywordToken; end
-	class TK::DISTINCT < KeywordToken; end
-	class TK::DO < IDKeywordToken; end
-	class TK::DOT < Token; end
-	class TK::DROP < KeywordToken; end
-	class TK::EACH < IDKeywordToken; end
-	class TK::ELSE < KeywordToken; end
-	class TK::END < IDKeywordToken; end
-	class TK::EQ < Token; end
-	class TK::ESCAPE < KeywordToken; end
-	class TK::EXCEPT < KeywordToken; end
-	class TK::EXCLUDE < IDKeywordToken; end
-	class TK::EXCLUSIVE < IDKeywordToken; end
-	class TK::EXISTS < KeywordToken; end
-	class TK::EXPLAIN < IDKeywordToken; end
-	class TK::FAIL < IDKeywordToken; end
-	class TK::FILTER < KeywordToken; end
-	class TK::FIRST < IDKeywordToken; end
-	class TK::FLOAT < Token; end
-	class TK::FOLLOWING < IDKeywordToken; end
-	class TK::FOR < IDKeywordToken; end
-	class TK::FOREIGN < KeywordToken; end
-	class TK::FROM < KeywordToken; end
-	class TK::GE < Token; end
-	class TK::GENERATED < IDKeywordToken; end
-	class TK::GROUP < KeywordToken; end
-	class TK::GROUPS < IDKeywordToken; end
-	class TK::GT < Token; end
-	class TK::HAVING < KeywordToken; end
-	class TK::ID < Token; end
-	class TK::IF < IDKeywordToken; end
-	class TK::IGNORE < IDKeywordToken; end
-	class TK::ILLEGAL < Token; end
-	class TK::IMMEDIATE < IDKeywordToken; end
-	class TK::IN < KeywordToken; end
-	class TK::INDEX < KeywordToken; end
-	class TK::INDEXED < KeywordToken; end
-	class TK::INITIALLY < IDKeywordToken; end
-	class TK::INSERT < KeywordToken; end
-	class TK::INSTEAD < IDKeywordToken; end
-	class TK::INTEGER < Token; end
-	class TK::INTERSECT < KeywordToken; end
-	class TK::INTO < KeywordToken; end
-	class TK::IS < KeywordToken; end
-	class TK::ISNULL < KeywordToken; end
-	class TK::JOIN < KeywordToken; end
-	class TK::JOIN_KW < KeywordToken; end
-	class TK::KEY < IDKeywordToken; end
-	class TK::LAST < IDKeywordToken; end
-	class TK::LE < Token; end
-	class TK::LIKE_KW < IDKeywordToken; end
-	class TK::LIMIT < KeywordToken; end
-	class TK::LP < Token; end
-	class TK::LSHIFT < Token; end
-	class TK::LT < Token; end
-	class TK::MATCH < IDKeywordToken; end
-	class TK::MATERIALIZED < IDKeywordToken; end
-	class TK::MINUS < Token; end
-	class TK::NE < Token; end
-	class TK::NO < IDKeywordToken; end
-	class TK::NOT < KeywordToken; end
-	class TK::NOTHING < KeywordToken; end
-	class TK::NOTNULL < KeywordToken; end
-	class TK::NULL < KeywordToken; end
-	class TK::NULLS < IDKeywordToken; end
-	class TK::OF < IDKeywordToken; end
-	class TK::OFFSET < IDKeywordToken; end
-	class TK::ON < KeywordToken; end
-	class TK::OR < KeywordToken; end
-	class TK::ORDER < KeywordToken; end
-	class TK::OTHERS < IDKeywordToken; end
-	class TK::OVER < KeywordToken; end
-	class TK::PARTITION < IDKeywordToken; end
-	class TK::PLAN < IDKeywordToken; end
-	class TK::PLUS < Token; end
-	class TK::PRAGMA < IDKeywordToken; end
-	class TK::PRECEDING < IDKeywordToken; end
-	class TK::PRIMARY < KeywordToken; end
-	class TK::PTR < Token; end
-	class TK::QUERY < IDKeywordToken; end
-	class TK::RAISE < IDKeywordToken; end
-	class TK::RANGE < IDKeywordToken; end
-	class TK::RECURSIVE < IDKeywordToken; end
-	class TK::REFERENCES < KeywordToken; end
-	class TK::REINDEX < IDKeywordToken; end
-	class TK::RELEASE < IDKeywordToken; end
-	class TK::REM < Token; end
-	class TK::RENAME < IDKeywordToken; end
-	class TK::REPLACE < IDKeywordToken; end
-	class TK::RESTRICT < IDKeywordToken; end
-	class TK::RETURNING < KeywordToken; end
-	class TK::ROLLBACK < IDKeywordToken; end
-	class TK::ROW < IDKeywordToken; end
-	class TK::ROWS < IDKeywordToken; end
-	class TK::RP < Token; end
-	class TK::RSHIFT < Token; end
-	class TK::SAVEPOINT < IDKeywordToken; end
-	class TK::SELECT < KeywordToken; end
-	class TK::SEMI < Token; end
-	class TK::SET < KeywordToken; end
-	class TK::SLASH < Token; end
-	class TK::SPACE < Token; end
-	class TK::STAR < Token; end
-	class TK::STRING < Token; end
-	class TK::TABLE < KeywordToken; end
-	class TK::TEMP < IDKeywordToken; end
-	class TK::THEN < KeywordToken; end
-	class TK::TIES < IDKeywordToken; end
-	class TK::TO < KeywordToken; end
-	class TK::TRANSACTION < KeywordToken; end
-	class TK::TRIGGER < IDKeywordToken; end
-	class TK::UNBOUNDED < IDKeywordToken; end
-	class TK::UNION < KeywordToken; end
-	class TK::UNIQUE < KeywordToken; end
-	class TK::UPDATE < KeywordToken; end
-	class TK::USING < KeywordToken; end
-	class TK::VACUUM < IDKeywordToken; end
-	class TK::VALUES < KeywordToken; end
-	class TK::VARIABLE < Token; end
-	class TK::VIEW < IDKeywordToken; end
-	class TK::VIRTUAL < IDKeywordToken; end
-	class TK::WHEN < KeywordToken; end
-	class TK::WHERE < KeywordToken; end
-	class TK::WINDOW < KeywordToken; end
-	class TK::WITH < IDKeywordToken; end
-	class TK::WITHOUT < IDKeywordToken; end
+	TK 								= Module.new
+
+	TK::ABORT					= Class.new(IDKeywordToken)
+	TK::ACTION				= Class.new(IDKeywordToken)
+	TK::ADD						= Class.new(KeywordToken)
+	TK::AFTER					= Class.new(IDKeywordToken)
+	TK::ALL						= Class.new(KeywordToken)
+	TK::ALTER					= Class.new(KeywordToken)
+	TK::ALWAYS				= Class.new(IDKeywordToken)
+	TK::ANALYZE				= Class.new(IDKeywordToken)
+	TK::AND						= Class.new(KeywordToken)
+	TK::AS						= Class.new(KeywordToken)
+	TK::ASC						= Class.new(IDKeywordToken)
+	TK::ATTACH				= Class.new(IDKeywordToken)
+	TK::AUTOINCR			= Class.new(KeywordToken)
+	TK::BEFORE				= Class.new(IDKeywordToken)
+	TK::BEGIN					= Class.new(IDKeywordToken)
+	TK::BETWEEN				= Class.new(KeywordToken)
+	TK::BITAND				= Class.new(Token)
+	TK::BITNOT				= Class.new(Token)
+	TK::BITOR					= Class.new(Token)
+	TK::BLOB					= Class.new(Token)
+	TK::BY						= Class.new(IDKeywordToken)
+	TK::CASCADE				= Class.new(IDKeywordToken)
+	TK::CASE					= Class.new(KeywordToken)
+	TK::CAST					= Class.new(IDKeywordToken)
+	TK::CHECK					= Class.new(KeywordToken)
+	TK::COLLATE				= Class.new(KeywordToken)
+	TK::COLUMNKW			= Class.new(IDKeywordToken)
+	TK::COMMA					= Class.new(Token)
+	TK::COMMIT				= Class.new(KeywordToken)
+	TK::CONCAT				= Class.new(Token)
+	TK::CONFLICT			= Class.new(IDKeywordToken)
+	TK::CONSTRAINT		= Class.new(KeywordToken)
+	TK::CREATE				= Class.new(KeywordToken)
+	TK::CTIME_KW			= Class.new(IDKeywordToken)
+	TK::CURRENT				= Class.new(IDKeywordToken)
+	TK::DATABASE			= Class.new(IDKeywordToken)
+	TK::DEFAULT				= Class.new(KeywordToken)
+	TK::DEFERRABLE		= Class.new(KeywordToken)
+	TK::DEFERRED			= Class.new(IDKeywordToken)
+	TK::DELETE				= Class.new(KeywordToken)
+	TK::DESC					= Class.new(IDKeywordToken)
+	TK::DETACH				= Class.new(IDKeywordToken)
+	TK::DISTINCT			= Class.new(KeywordToken)
+	TK::DO						= Class.new(IDKeywordToken)
+	TK::DOT						= Class.new(Token)
+	TK::DROP					= Class.new(KeywordToken)
+	TK::EACH					= Class.new(IDKeywordToken)
+	TK::ELSE					= Class.new(KeywordToken)
+	TK::END						= Class.new(IDKeywordToken)
+	TK::EQ						= Class.new(Token)
+	TK::ESCAPE				= Class.new(KeywordToken)
+	TK::EXCEPT				= Class.new(KeywordToken)
+	TK::EXCLUDE				= Class.new(IDKeywordToken)
+	TK::EXCLUSIVE			= Class.new(IDKeywordToken)
+	TK::EXISTS				= Class.new(KeywordToken)
+	TK::EXPLAIN				= Class.new(IDKeywordToken)
+	TK::FAIL					= Class.new(IDKeywordToken)
+	TK::FILTER				= Class.new(KeywordToken)
+	TK::FIRST					= Class.new(IDKeywordToken)
+	TK::FLOAT					= Class.new(Token)
+	TK::FOLLOWING			= Class.new(IDKeywordToken)
+	TK::FOR						= Class.new(IDKeywordToken)
+	TK::FOREIGN				= Class.new(KeywordToken)
+	TK::FROM					= Class.new(KeywordToken)
+	TK::GE						= Class.new(Token)
+	TK::GENERATED			= Class.new(IDKeywordToken)
+	TK::GROUP					= Class.new(KeywordToken)
+	TK::GROUPS				= Class.new(IDKeywordToken)
+	TK::GT						= Class.new(Token)
+	TK::HAVING				= Class.new(KeywordToken)
+	TK::ID						= Class.new(Token)
+	TK::IF						= Class.new(IDKeywordToken)
+	TK::IGNORE				= Class.new(IDKeywordToken)
+	TK::ILLEGAL				= Class.new(Token)
+	TK::IMMEDIATE			= Class.new(IDKeywordToken)
+	TK::IN						= Class.new(KeywordToken)
+	TK::INDEX					= Class.new(KeywordToken)
+	TK::INDEXED				= Class.new(KeywordToken)
+	TK::INITIALLY			= Class.new(IDKeywordToken)
+	TK::INSERT				= Class.new(KeywordToken)
+	TK::INSTEAD				= Class.new(IDKeywordToken)
+	TK::INTEGER				= Class.new(Token)
+	TK::INTERSECT			= Class.new(KeywordToken)
+	TK::INTO					= Class.new(KeywordToken)
+	TK::IS						= Class.new(KeywordToken)
+	TK::ISNULL				= Class.new(KeywordToken)
+	TK::JOIN					= Class.new(KeywordToken)
+	TK::JOIN_KW				= Class.new(KeywordToken)
+	TK::KEY						= Class.new(IDKeywordToken)
+	TK::LAST					= Class.new(IDKeywordToken)
+	TK::LE						= Class.new(Token)
+	TK::LIKE_KW				= Class.new(IDKeywordToken)
+	TK::LIMIT					= Class.new(KeywordToken)
+	TK::LP						= Class.new(Token)
+	TK::LSHIFT				= Class.new(Token)
+	TK::LT						= Class.new(Token)
+	TK::MATCH					= Class.new(IDKeywordToken)
+	TK::MATERIALIZED	= Class.new(IDKeywordToken)
+	TK::MINUS					= Class.new(Token)
+	TK::NE						= Class.new(Token)
+	TK::NO						= Class.new(IDKeywordToken)
+	TK::NOT						= Class.new(KeywordToken)
+	TK::NOTHING				= Class.new(KeywordToken)
+	TK::NOTNULL				= Class.new(KeywordToken)
+	TK::NULL					= Class.new(KeywordToken)
+	TK::NULLS					= Class.new(IDKeywordToken)
+	TK::OF						= Class.new(IDKeywordToken)
+	TK::OFFSET				= Class.new(IDKeywordToken)
+	TK::ON						= Class.new(KeywordToken)
+	TK::OR						= Class.new(KeywordToken)
+	TK::ORDER					= Class.new(KeywordToken)
+	TK::OTHERS				= Class.new(IDKeywordToken)
+	TK::OVER					= Class.new(KeywordToken)
+	TK::PARTITION			= Class.new(IDKeywordToken)
+	TK::PLAN					= Class.new(IDKeywordToken)
+	TK::PLUS					= Class.new(Token)
+	TK::PRAGMA				= Class.new(IDKeywordToken)
+	TK::PRECEDING			= Class.new(IDKeywordToken)
+	TK::PRIMARY				= Class.new(KeywordToken)
+	TK::PTR						= Class.new(Token)
+	TK::QUERY					= Class.new(IDKeywordToken)
+	TK::RAISE					= Class.new(IDKeywordToken)
+	TK::RANGE					= Class.new(IDKeywordToken)
+	TK::RECURSIVE			= Class.new(IDKeywordToken)
+	TK::REFERENCES		= Class.new(KeywordToken)
+	TK::REINDEX				= Class.new(IDKeywordToken)
+	TK::RELEASE				= Class.new(IDKeywordToken)
+	TK::REM						= Class.new(Token)
+	TK::RENAME				= Class.new(IDKeywordToken)
+	TK::REPLACE				= Class.new(IDKeywordToken)
+	TK::RESTRICT			= Class.new(IDKeywordToken)
+	TK::RETURNING			= Class.new(KeywordToken)
+	TK::ROLLBACK			= Class.new(IDKeywordToken)
+	TK::ROW						= Class.new(IDKeywordToken)
+	TK::ROWS					= Class.new(IDKeywordToken)
+	TK::RP						= Class.new(Token)
+	TK::RSHIFT				= Class.new(Token)
+	TK::SAVEPOINT			= Class.new(IDKeywordToken)
+	TK::SELECT				= Class.new(KeywordToken)
+	TK::SEMI					= Class.new(Token)
+	TK::SET						= Class.new(KeywordToken)
+	TK::SLASH					= Class.new(Token)
+	TK::SPACE					= Class.new(Token)
+	TK::STAR					= Class.new(Token)
+	TK::STRING				= Class.new(Token)
+	TK::TABLE					= Class.new(KeywordToken)
+	TK::TEMP					= Class.new(IDKeywordToken)
+	TK::THEN					= Class.new(KeywordToken)
+	TK::TIES					= Class.new(IDKeywordToken)
+	TK::TO						= Class.new(KeywordToken)
+	TK::TRANSACTION		= Class.new(KeywordToken)
+	TK::TRIGGER				= Class.new(IDKeywordToken)
+	TK::UNBOUNDED			= Class.new(IDKeywordToken)
+	TK::UNION					= Class.new(KeywordToken)
+	TK::UNIQUE				= Class.new(KeywordToken)
+	TK::UPDATE				= Class.new(KeywordToken)
+	TK::USING					= Class.new(KeywordToken)
+	TK::VACUUM				= Class.new(IDKeywordToken)
+	TK::VALUES				= Class.new(KeywordToken)
+	TK::VARIABLE			= Class.new(Token)
+	TK::VIEW					= Class.new(IDKeywordToken)
+	TK::VIRTUAL				= Class.new(IDKeywordToken)
+	TK::WHEN					= Class.new(KeywordToken)
+	TK::WHERE					= Class.new(KeywordToken)
+	TK::WINDOW				= Class.new(KeywordToken)
+	TK::WITH					= Class.new(IDKeywordToken)
+	TK::WITHOUT				= Class.new(IDKeywordToken)
 end
