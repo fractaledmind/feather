@@ -1,49 +1,59 @@
-# Feather
+# Plume
 
-Feather is a Ruby library for working with SQLite elegantly. Presently, this means that it provides a pure Ruby implementation of SQLite's lexer/tokenizer. This is useful for introspecting the structure of SQL queries, and for building tools that work with SQL queries.
+<img src="/assets/logo.svg" width="100" alt="Plume logo: a blue feather quill pen" align="right" />
+
+Plume is a Ruby library for working with SQLite elegantly. Presently, this means that it provides a pure Ruby implementation of SQLite's lexer/tokenizer. This is useful for introspecting the structure of SQL queries, and for building tools that work with SQL queries.
 
 ## Installation
 
-This library is not presently a gem, so you will need to clone the repository to install:
+Install the gem and add to the application's Gemfile by executing:
 
 ```bash
-git clone git@github.com:fractaledmind/feather.git
+bundle add plume
+```
+
+If bundler is not being used to manage dependencies, install the gem by executing:
+
+```bash
+gem install plume
 ```
 
 ## Usage
 
-Tokenize a SQL query with the `Feather::Lexer` class:
+Tokenize a SQL query with the `Plume::Lexer` class:
 
 ```ruby
-lexer = Feather::Lexer.new("SELECT * FROM users WHERE id = 1")
+lexer = Plume::Lexer.new("SELECT * FROM users WHERE id = 1")
 tokens = lexer.tokenize
 # =>
-# [Feather::TK::SELECT["SELECT"],
-#  Feather::TK::SPACE[" "],
-#  Feather::TK::STAR["*"],
-#  Feather::TK::SPACE[" "],
-#  Feather::TK::FROM["FROM"],
-#  Feather::TK::SPACE[" "],
-#  Feather::TK::ID["users"],
-#  Feather::TK::SPACE[" "],
-#  Feather::TK::WHERE["WHERE"],
-#  Feather::TK::SPACE[" "],
-#  Feather::TK::ID["id"],
-#  Feather::TK::SPACE[" "],
-#  Feather::TK::EQ["="],
-#  Feather::TK::SPACE[" "],
-#  Feather::TK::INTEGER["1"]]
+# [Plume::TK::SELECT["SELECT"],
+#  Plume::TK::SPACE[" "],
+#  Plume::TK::STAR["*"],
+#  Plume::TK::SPACE[" "],
+#  Plume::TK::FROM["FROM"],
+#  Plume::TK::SPACE[" "],
+#  Plume::TK::ID["users"],
+#  Plume::TK::SPACE[" "],
+#  Plume::TK::WHERE["WHERE"],
+#  Plume::TK::SPACE[" "],
+#  Plume::TK::ID["id"],
+#  Plume::TK::SPACE[" "],
+#  Plume::TK::EQ["="],
+#  Plume::TK::SPACE[" "],
+#  Plume::TK::INTEGER["1"]]
 ```
 
-You can find all of the token types in the `Feather::TK` module. SQLite works with a grammar of _167_ token types (`Feather::TK.constants.size`), _136_ of which are keywords (`Feather::TK.constants.select { |c| Feather::TK.const_get(c) < Feather::KeywordToken }.size`). The remaining _31_ are punctuation, operators, and literals.
+You can find all of the token types in the `Plume::TK` module. SQLite works with a grammar of _167_ token types (`Plume::TK.constants.size`), _136_ of which are keywords (`Plume::TK.constants.select { |c| Plume::TK.const_get(c) < Plume::KeywordToken }.size`). The remaining _31_ are punctuation, operators, and literals.
 
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
+To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/fractaledmind/feather. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/fractaledmind/feather/blob/main/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/fractaledmind/plume. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/fractaledmind/plume/blob/main/CODE_OF_CONDUCT.md).
 
 ## License
 
@@ -51,4 +61,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Feather project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/fractaledmind/feather/blob/main/CODE_OF_CONDUCT.md).
+Everyone interacting in the Plume project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/fractaledmind/plume/blob/main/CODE_OF_CONDUCT.md).

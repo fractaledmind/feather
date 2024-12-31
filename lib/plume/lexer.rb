@@ -5,7 +5,7 @@ require_relative "lexer/character"
 require_relative "lexer/characters"
 require_relative "lexer/keywords"
 
-module Feather
+module Plume
 	# Map ASCII characters to their respective token types
 	# adapted from: https://github.com/sqlite/sqlite/blob/master/src/tokenize.c
 	class Lexer

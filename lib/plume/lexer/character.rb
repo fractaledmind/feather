@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Feather
+module Plume
 	class Lexer
 		class Character
 			# rubocop:disable Layout/LeadingCommentSpace

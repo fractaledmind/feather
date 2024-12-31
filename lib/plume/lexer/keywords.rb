@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Feather
+module Plume
 	class Lexer
 		module Keywords
 			# adapted from: https://github.com/sqlite/sqlite/blob/master/tool/mkkeywordhash.c
