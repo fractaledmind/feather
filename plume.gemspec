@@ -4,7 +4,7 @@ require_relative "lib/plume/version"
 
 Gem::Specification.new do |spec|
 	spec.name = "plume"
-	spec.version = Feather::VERSION
+	spec.version = Plume::VERSION
 	spec.authors = ["Stephen Margheim", "Joel Drapper"]
 	spec.email = ["stephen.margheim@gmail.com", "joel@drapper.me"]
 
