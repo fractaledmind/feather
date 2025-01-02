@@ -333,7 +333,7 @@ module Plume
 				nil if current_byte == 12 # "\f"
 				nil if current_byte == 13 # "\r"
 
-				step until (b = peek).nil? || !is_space(b)
+				step until (b = peek).nil? || !space?(b)
 
 				:SPACE
 			when :MINUS
@@ -399,7 +399,7 @@ module Plume
 			when :DOT, :DIGIT
 				# If the current character is a "." and the next character is either EOF or not a digit,
 				# then this token is simply the "." character.
-				if character_type == :DOT && ((b = peek).nil? || !is_digit(b))
+				if character_type == :DOT && ((b = peek).nil? || !digit?(b))
 					return step && :DOT
 				end
 
@@ -417,10 +417,10 @@ module Plume
 				nil if current_byte == 57 # "9"
 
 				token_type = (character_type == :DOT) ? :FLOAT : :INTEGER
-				if current_byte == 48 && ((b = peek) == 120 || b == 88) && is_xdigit(peek(1)) # "0" and "x" or "X"
+				if current_byte == 48 && ((b = peek) == 120 || b == 88) && xdigit?(peek(1)) # "0" and "x" or "X"
 					step(2) # consume the "x" or "X" and the first hex digit
 					while (b = peek)
-						if is_xdigit(b)
+						if xdigit?(b)
 							step && next
 						elsif b == 95 # "_"
 							token_type = :QNUMBER
@@ -434,7 +434,7 @@ module Plume
 				end
 
 				while (b = peek)
-					if is_digit(b)
+					if digit?(b)
 						step && next
 					elsif b == 95 # "_"
 						token_type = :QNUMBER
@@ -449,7 +449,7 @@ module Plume
 					token_type = :FLOAT if token_type == :INTEGER
 
 					while (b = peek)
-						if is_digit(b)
+						if digit?(b)
 							step && next
 						elsif b == 95 # "_"
 							token_type = :QNUMBER
@@ -461,15 +461,15 @@ module Plume
 				end
 
 				if (peek == 101 || peek == 69) && ( # "e" or "E"
-					is_digit(peek(1)) || (
-						(peek(1) == 43 || peek(1) == 45) && is_digit(peek(2)) # "+" or "-"
+					digit?(peek(1)) || (
+						(peek(1) == 43 || peek(1) == 45) && digit?(peek(2)) # "+" or "-"
 					)
 				)
 					step(2)
 					token_type = :FLOAT if token_type == :INTEGER
 
 					while (b = peek)
-						if is_digit(b)
+						if digit?(b)
 							step && next
 						elsif b == 95 # "_"
 							token_type = :QNUMBER
@@ -480,7 +480,7 @@ module Plume
 					end
 				end
 
-				while is_id_byte(peek)
+				while id?(peek)
 					token_type = :ILLEGAL
 					step
 				end
@@ -495,7 +495,7 @@ module Plume
 
 				:ID
 			when :VARNUM
-				step while is_digit(peek)
+				step while digit?(peek)
 
 				:VARIABLE
 			when :DOLLAR, :VARALPHA
@@ -508,11 +508,11 @@ module Plume
 				n = 0
 				token_type = :VARIABLE
 				until (b = peek).nil?
-					if is_id_byte(b)
+					if id?(b)
 						n += 1
 					elsif n > 0 && b == 40 # "("
 						step
-						step until (b = peek).nil? || is_space(b) || b == 41 # ")"
+						step until (b = peek).nil? || space?(b) || b == 41 # ")"
 
 						if peek == 41 # ")"
 							step
@@ -538,7 +538,7 @@ module Plume
 				# If the next character is not a keyword character, consume all the id characters and return it as an id
 				kywd = TYPES.index(:KYWD)
 				if (b = peek) && (type = CHARACTER_TYPES[b]) && TYPES.index(type) > kywd
-					step while is_id_byte(peek)
+					step while id?(peek)
 
 					return :ID
 				end
@@ -549,8 +549,8 @@ module Plume
 				# This token started out using characters that can appear in keywords,
 				# but now there is a character not allowed within keywords,
 				# so this must be an identifier instead
-				if (b = peek) && is_id_byte(b)
-					step while is_id_byte(peek)
+				if (b = peek) && id?(b)
+					step while id?(peek)
 
 					return :ID
 				end
@@ -566,7 +566,7 @@ module Plume
 					token_type = :BLOB
 					step
 
-					step while is_xdigit(peek)
+					step while xdigit?(peek)
 
 					if peek != 39 || ((@cursor - @start_cursor) % 2) != 0
 						token_type = :ILLEGAL
@@ -580,17 +580,17 @@ module Plume
 
 				# If it is not a BLOB literal, then it must be an ID, since no
 				# SQL keywords start with the letter 'x'.
-				step while is_id_byte(peek)
+				step while id?(peek)
 
 				:ID
 			when :KYWD, :ID
-				step while is_id_byte(peek)
+				step while id?(peek)
 
 				:ID
 			when :BOM
 				return step(2) && :SPACE if peek == 0xFE && peek(1) == 0xFF
 
-				step while is_id_byte(peek)
+				step while id?(peek)
 				:ID
 			else
 				:ILLEGAL
@@ -607,13 +607,13 @@ module Plume
 		def step(n = 1) = @cursor += n
 		def scan(n = 0) = peek(n).tap { step(n+1) }
 
-		def is_space(byte) 		= byte && CHARACTER_FLAGS[byte] & 0x01 != 0
-		def is_alnum(byte) 		= byte && CHARACTER_FLAGS[byte] & 0x06 != 0
-		def is_alpha(byte) 		= byte && CHARACTER_FLAGS[byte] & 0x02 != 0
-		def is_digit(byte) 		= byte && CHARACTER_FLAGS[byte] & 0x04 != 0
-		def is_xdigit(byte) 	= byte && CHARACTER_FLAGS[byte] & 0x08 != 0
-		def is_quote(byte) 		= byte && CHARACTER_FLAGS[byte] & 0x80 != 0
-		def is_id_byte(byte) 	= byte && CHARACTER_FLAGS[byte] & 0x46 != 0
+		def space?(byte) 	= byte && CHARACTER_FLAGS[byte] & 0x01 != 0
+		def alnum?(byte) 	= byte && CHARACTER_FLAGS[byte] & 0x06 != 0
+		def alpha?(byte) 	= byte && CHARACTER_FLAGS[byte] & 0x02 != 0
+		def digit?(byte) 	= byte && CHARACTER_FLAGS[byte] & 0x04 != 0
+		def xdigit?(byte) = byte && CHARACTER_FLAGS[byte] & 0x08 != 0
+		def quote?(byte) 	= byte && CHARACTER_FLAGS[byte] & 0x80 != 0
+		def id?(byte) 		= byte && CHARACTER_FLAGS[byte] & 0x46 != 0
 		# If X is a character that can be used in an identifier then
 		# IdChar(X) will be true.  Otherwise it is false.
 		#
